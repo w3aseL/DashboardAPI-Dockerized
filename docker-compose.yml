@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: dashboard-api-gateway
+    image: nginx:mainline-alpine
+    ports:
+      - 8080:8080
+  auth:
+    container_name: dashboard-api-auth
+    image: dashboard-api-auth
+    build:
+      context: ./auth
+    env_file:
+      - .env
+    ports:
+     - 5001:5001
+    volumes:
+     - /keys:/keys
+     - /storage/auth.db:/storage/auth.db
